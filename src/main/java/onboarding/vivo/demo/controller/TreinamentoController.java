@@ -23,7 +23,7 @@ public class TreinamentoController {
     @GetMapping("/test")
     public String test() {
         System.out.println("🧪 Endpoint de teste chamado!");
-        return "Controller funcionando!";
+        return "Controller treinamento funcionando!";
     }
 
     @GetMapping("/debug")
@@ -38,21 +38,18 @@ public class TreinamentoController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/get-treinamento")
     public List<Treinamento> getAll() {
-        System.out.println("📋 Controller: GET /dashboard/treinamentos/ chamado!");
         return service.findAll();
     }
 
     @GetMapping("/get-treinamento/{id}")
     public Treinamento getById(@PathVariable Long id) {
-        System.out.println("🔍 Controller: GET /get-treinamento/" + id + " chamado!");
         return service.findById(id);
     }
 
-    @PostMapping ("/create") // Mapeia para POST /dashboard/treinamentos/
+    @PostMapping ("/create-treinamento") // Mapeia para POST /dashboard/treinamentos/
     public ResponseEntity<Treinamento> create(@Valid @RequestBody Treinamento t) {
-        System.out.println("✍️ POST /dashboard/treinamentos/ chamado com: " + t.getNome());
         Treinamento created = service.create(t);
         return ResponseEntity.created(URI.create("/dashboard/treinamentos/post/" + created.getId())).body(created);
     }
