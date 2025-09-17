@@ -1,7 +1,11 @@
 package onboarding.vivo.demo.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import onboarding.vivo.demo.config.LocalDateDeserializer;
 
 import java.time.LocalDate;
 
@@ -20,9 +24,12 @@ public class Tarefa {
     private String descricao;
 
     @Column(name = "data_inicio", nullable = false)
+    @NotNull(message = "dataInicio é obrigatória")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataInicio;
 
     @Column(name = "data_fim")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataFim;
 
     @Column(name = "id_funcionario")

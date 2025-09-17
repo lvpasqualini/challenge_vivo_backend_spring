@@ -54,4 +54,30 @@ public class TreinamentoService {
         Treinamento existing = findById(id);
         repo.delete(existing);
     }
+
+    // Métodos para relatório
+    public long countTreinamentosConcluidos() {
+        System.out.println("📊 Service: Contando treinamentos concluídos...");
+        long count = repo.findAll().stream()
+                .filter(treinamento -> treinamento.getDataFim() != null)
+                .count();
+        System.out.println("✅ Service: " + count + " treinamentos concluídos encontrados");
+        return count;
+    }
+
+    public long countTreinamentosNaoConcluidos() {
+        System.out.println("📊 Service: Contando treinamentos não concluídos...");
+        long count = repo.findAll().stream()
+                .filter(treinamento -> treinamento.getDataFim() == null)
+                .count();
+        System.out.println("⏳ Service: " + count + " treinamentos não concluídos encontrados");
+        return count;
+    }
+
+    public long countTotalTreinamentos() {
+        System.out.println("📊 Service: Contando total de treinamentos...");
+        long count = repo.count();
+        System.out.println("📋 Service: " + count + " treinamentos totais");
+        return count;
+    }
 }

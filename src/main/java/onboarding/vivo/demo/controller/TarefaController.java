@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dashboard/tarefas")
+@CrossOrigin(origins = "*")
 public class TarefaController {
     private final TarefaService service;
 
@@ -25,29 +26,38 @@ public class TarefaController {
         return "Controller tarefa funcionando!";
     }
 
-    @GetMapping("/get-tarefa")
+    @GetMapping(path = {"", "/get-tarefa"})
     public List<Tarefa> getAll() {
+        System.out.println("Controller: GET /dashboard/tarefas");
         return service.findAll();
     }
 
-    @GetMapping("/get-tarefa/{id}")
+    @GetMapping(path = {"/{id}", "/get-tarefa/{id}"})
     public Tarefa getById(@PathVariable Long id) {
+        System.out.println("Controller: GET /dashboard/tarefas/" + id);
         return service.findById(id);
     }
 
-    @PostMapping("/create-tarefa")
-    public ResponseEntity<Tarefa> create(@Valid @RequestBody Tarefa t) {
-        Tarefa created = service.create(t);
-        return ResponseEntity.created(URI.create("/dashboard/treinamentos/post/" + created.getId())).body(created);
+    @PostMapping(path = {"", "/create-tarefa"})
+    public ResponseEntity<Tarefa> create(@Valid @RequestBody Tarefa tarefa) {
+        System.out.println("Controller: POST /dashboard/tarefas com body=" + tarefa);
+        Tarefa created = service.create(tarefa);
+        URI location = URI.create("/dashboard/tarefas/" + created.getId());
+        System.out.println("Controller: tarefa criada com id=" + created.getId());
+        return ResponseEntity
+                .created(location)
+                .body(created);
     }
 
-    @PutMapping("/update-tarefa/{id}")
+    @PutMapping(path = {"/{id}", "/update-tarefa/{id}"})
     public Tarefa update(@PathVariable Long id, @Valid @RequestBody Tarefa t) {
+        System.out.println("Controller: PUT /dashboard/tarefas/" + id + " com body=" + t);
         return service.update(id, t);
     }
 
-    @DeleteMapping("/delete-tarefa/{id}")
+    @DeleteMapping(path = {"/{id}", "/delete-tarefa/{id}"})
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+        System.out.println("Controller: DELETE /dashboard/tarefas/" + id);
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

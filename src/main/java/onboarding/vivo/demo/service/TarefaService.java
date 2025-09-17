@@ -49,4 +49,30 @@ public class TarefaService {
         Tarefa existing = findById(id);
         repo.delete(existing);
     }
+
+    // Métodos para relatório
+    public long countTarefasConcluidas() {
+        System.out.println("📊 Service: Contando tarefas concluídas...");
+        long count = repo.findAll().stream()
+                .filter(tarefa -> tarefa.getDataFim() != null)
+                .count();
+        System.out.println("✅ Service: " + count + " tarefas concluídas encontradas");
+        return count;
+    }
+
+    public long countTarefasNaoConcluidas() {
+        System.out.println("📊 Service: Contando tarefas não concluídas...");
+        long count = repo.findAll().stream()
+                .filter(tarefa -> tarefa.getDataFim() == null)
+                .count();
+        System.out.println("⏳ Service: " + count + " tarefas não concluídas encontradas");
+        return count;
+    }
+
+    public long countTotalTarefas() {
+        System.out.println("📊 Service: Contando total de tarefas...");
+        long count = repo.count();
+        System.out.println("📋 Service: " + count + " tarefas totais");
+        return count;
+    }
 }
