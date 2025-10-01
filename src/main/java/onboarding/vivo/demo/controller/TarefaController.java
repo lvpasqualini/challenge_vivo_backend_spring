@@ -20,31 +20,29 @@ public class TarefaController {
 
     @GetMapping("/get-tarefa")
     public List<Tarefa> getAll() {
-        System.out.println("Controller: GET /dashboard/tarefas");
         return service.findAll();
     }
 
     @GetMapping("/get-tarefa/{id}")
     public Tarefa getById(@PathVariable Long id) {
-        System.out.println("Controller: GET /dashboard/tarefas/" + id);
         return service.findById(id);
     }
 
     @PostMapping("/create-tarefa")
     public ResponseEntity<Tarefa> create(@Valid @RequestBody Tarefa tarefa) {
         Tarefa created = service.create(tarefa);
-        URI location = URI.create("/dashboard/tarefas/" + created.getId());
+        // Configura Location header para GET /dashboard/tarefas/{id}
         return ResponseEntity
-                .created(location)
+                .created(URI.create("/dashboard/tarefas/" + created.getId()))
                 .body(created);
     }
 
-    @PutMapping("/update-tarefa/{id}")
+    @PutMapping("update-tarefa/{id}")
     public Tarefa update(@PathVariable Long id, @Valid @RequestBody Tarefa t) {
         return service.update(id, t);
     }
 
-    @DeleteMapping("/delete-tarefa/{id}")
+    @DeleteMapping("delete-tarefa/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
