@@ -17,25 +17,6 @@ public class TreinamentoController {
 
     public TreinamentoController(TreinamentoService service) {
         this.service = service;
-        System.out.println("🚀 TreinamentoController foi criado!");
-    }
-
-    @GetMapping("/test")
-    public String test() {
-        System.out.println("🧪 Endpoint de teste chamado!");
-        return "Controller treinamento funcionando!";
-    }
-
-    @GetMapping("/debug")
-    public String debug() {
-        System.out.println("🔍 Debug: Testando conexão com banco...");
-        try {
-            List<Treinamento> todos = service.findAll();
-            return "✅ Conexão OK! Encontrados " + todos.size() + " treinamentos na tabela.";
-        } catch (Exception e) {
-            System.out.println("❌ Erro: " + e.getMessage());
-            return "❌ Erro na conexão: " + e.getMessage();
-        }
     }
 
     @GetMapping("/get-treinamento")

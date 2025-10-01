@@ -16,17 +16,13 @@ public class TarefaService {
     }
 
     public List<Tarefa> findAll() {
-        System.out.println("🔍 Service: Buscando todos as tarefas...");
-        List<Tarefa> result = repo.findAll();
-        System.out.println("📊 Service: Encontrados " + result.size() + " tarefa");
-        return result;
+        return repo.findAll();
     }
 
     public Tarefa findById(Long id) {
-        System.out.println("🔍 Service: Buscando tarefa com ID " + id);
         return repo.findById(id)
                 .orElseThrow(() -> {
-                    System.out.println("❌ Service: Tarefa com ID " + id + " não encontrado!");
+                    System.out.println("Service: Tarefa com ID " + id + " não encontrado!");
                     return new ResourceNotFoundException("Tarefa não encontrado com id " + id);
                 });
     }
@@ -50,29 +46,21 @@ public class TarefaService {
         repo.delete(existing);
     }
 
-    // Métodos para relatório
     public long countTarefasConcluidas() {
-        System.out.println("📊 Service: Contando tarefas concluídas...");
         long count = repo.findAll().stream()
                 .filter(tarefa -> tarefa.getDataFim() != null)
                 .count();
-        System.out.println("✅ Service: " + count + " tarefas concluídas encontradas");
         return count;
     }
 
     public long countTarefasNaoConcluidas() {
-        System.out.println("📊 Service: Contando tarefas não concluídas...");
         long count = repo.findAll().stream()
                 .filter(tarefa -> tarefa.getDataFim() == null)
                 .count();
-        System.out.println("⏳ Service: " + count + " tarefas não concluídas encontradas");
         return count;
     }
 
     public long countTotalTarefas() {
-        System.out.println("📊 Service: Contando total de tarefas...");
-        long count = repo.count();
-        System.out.println("📋 Service: " + count + " tarefas totais");
-        return count;
+        return repo.count();
     }
 }
