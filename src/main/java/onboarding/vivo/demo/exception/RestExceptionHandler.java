@@ -10,6 +10,4 @@ public class RestExceptionHandler {
   public ResponseEntity<?> handleNotFound(ResourceNotFoundException ex) {
     return ResponseEntity.status(404).body(ex.getMessage());
   }
-
-  // você pode adicionar handlers para outras exceções (ConstraintViolation, etc.)
 }
