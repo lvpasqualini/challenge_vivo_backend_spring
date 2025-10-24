@@ -160,7 +160,7 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 ### Variáveis de Ambiente Obrigatórias
 ```bash
-DB_ORCL=jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
+DB_ORCL=jdbc:oracle:thin:@'SUA URL'
 DB_ORCL_USER=seu_usuario
 DB_ORCL_PASSWORD=sua_senha
 ```
